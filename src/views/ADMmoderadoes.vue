@@ -120,7 +120,7 @@ async function criarModerador() {
     width: 100%;
     height: 100%;
     background-color: #f8f9fa;
-    overflow-y: auto;
+    overflow-y: hidden;
     overflow-x: hidden;
     padding: 20px;
     box-sizing: border-box;
@@ -136,6 +136,7 @@ async function criarModerador() {
     height: 100%;
     min-width: 0;
     overflow-x: hidden;
+    overflow-y: hidden;
 }
 
 .barra-do-titulo {

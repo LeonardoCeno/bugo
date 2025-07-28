@@ -1,22 +1,21 @@
 <template>
-<Header></Header>
-<div class="divisoria" ></div>
+<TopBar />
 <div class="Tudo">
     <div class="menuesquerdo" >
         <h2> <span class="h2fake" > Olá, {{ usuario.name }}</span> 👋 </h2>
-        <router-link to="/dados"> <button>Meus dados</button></router-link>
-        <router-link to="/carrinho"> <button>Carrinho</button></router-link>
-        <router-link to="/favoritos"> <button>Favoritos</button></router-link>
-        <router-link to="/pedidos"> <button>Pedidos</button></router-link>
-        <router-link to="/enderecos"> <button>Endereços</button></router-link>
-        <router-link to="/cupons"> <button>Cupons</button></router-link>
+        <router-link to="/dados"> <button :class="{ active: $route.path === '/dados' }">Meus dados</button></router-link>
+        <router-link to="/carrinho"> <button :class="{ active: $route.path === '/carrinho' }">Carrinho</button></router-link>
+        <router-link to="/favoritos"> <button :class="{ active: $route.path === '/favoritos' }">Favoritos</button></router-link>
+        <router-link to="/pedidos"> <button :class="{ active: $route.path === '/pedidos' }">Pedidos</button></router-link>
+        <router-link to="/enderecos"> <button :class="{ active: $route.path === '/enderecos' }">Endereços</button></router-link>
+        <router-link to="/cupons"> <button :class="{ active: $route.path === '/cupons' }">Cupons</button></router-link>
         <div class="admin" v-if="userRole === 'ADMIN' || userRole === 'MODERATOR'">
-        <h3>ADMIN</h3>
-        <router-link to="/ADMmoderadores"> <button>Gerenciar Moderadores</button></router-link>
-        <router-link to="/ADMcategorias"> <button>Gerenciar categorias</button></router-link>
-        <router-link to="/ADMprodutos"> <button>Gerenciar produtos</button></router-link>
-        <router-link to="/ADMpedidos"> <button>Gerenciar Pedidos</button></router-link>
-        <router-link to="/ADMcupons"> <button>Gerenciar Cupons</button></router-link>
+        <h3>GERENCIAR</h3>
+        <router-link to="/ADMmoderadores"> <button :class="{ active: $route.path === '/ADMmoderadores' }">Moderadores</button></router-link>
+        <router-link to="/ADMcategorias"> <button :class="{ active: $route.path === '/ADMcategorias' }">Categorias</button></router-link>
+        <router-link to="/ADMprodutos"> <button :class="{ active: $route.path === '/ADMprodutos' }">Produtos</button></router-link>
+        <router-link to="/ADMpedidos"> <button :class="{ active: $route.path === '/ADMpedidos' }">Pedidos</button></router-link>
+        <router-link to="/ADMcupons"> <button :class="{ active: $route.path === '/ADMcupons' }">Cupons</button></router-link>
         
         </div>
     </div>
@@ -28,7 +27,7 @@
 </template>
 
 <script setup>
-import Header from '../components/Headercomponent.vue'
+import TopBar from '../components/TopBar.vue'
 import Footer from '../components/Footercomponent.vue'
 import { ref, onMounted } from 'vue'
 import api from '../services/api'
@@ -53,18 +52,14 @@ onMounted(async () => {
 
 <style scoped>
 
-.divisoria{
-    width: 100%;
-    height: 1px;
-    background-color: #06080afa;
-}
+
 
 .Tudo{
     display: flex;
     justify-content: center;
     width: 100%;
     height: 100vh;
-    padding: 20px;
+    padding: 20px 0;
     box-sizing: border-box;
     overflow-x: hidden;
 }
@@ -74,49 +69,77 @@ onMounted(async () => {
     max-width: 400px;
     min-width: 280px;
     height: 100%;
-    background-color: #06080afa;
-    border: px solid white;
+    background: #02060af5;
     z-index: 10;
-    border-radius: 12px 0 0 12px;
     flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    overflow-y: auto;
+    border-radius: 12px 0 0 12px;
+    border-left: 1px solid #02060af5;
 }
 
 .menuesquerdo h2 {
-    color: white;
+    color: #ffffff;
     text-align: center;
-    padding-top: 20px;
-    font-size: clamp(1.2rem, 2vw, 1.8rem);
+    padding: 25px 15px 20px 15px;
+    font-size: clamp(1.1rem, 1.8vw, 1.6rem);
+    margin: 0;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .h2fake {
-    text-decoration: underline;
+    color: #ffffff;
 }
 
 .menuesquerdo h3{
-    color: #ffffff;
-    font-size: clamp(1.3rem, 2.2vw, 2rem);
-    font-weight: bold;
+    color: #079ac7;
+    font-size: clamp(1.1rem, 1.8vw, 1.6rem);
+    font-weight: 600;
     text-align: center;
-    margin-top: 20px;
-    text-decoration: underline;
+    margin: 20px 15px 15px 15px;
+    padding: 12px 15px;
+    text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .menuesquerdo button{
     width: 100%;
-    height: clamp(50px, 6vh, 80px);
+    height: clamp(45px, 5vh, 70px);
     color: #ffffff;
-    font-weight: bold;
-    font-size: clamp(0.9rem, 1.5vw, 1.3rem);
+    font-weight: 500;
+    font-size: clamp(0.85rem, 1.4vw, 1.2rem);
+    background: transparent;
+    border: none;
+    margin: 0;
+    padding: 0 15px;
+
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
 }
-
-
 
 .menuesquerdo button:hover{
-    transition: 0.1s;
-    background-color: #eeeeee;
-    color: #000000;
+    color: #079ac7;
 }
 
+.menuesquerdo button.active {
+    border-left: 4px solid #ffffff;
+    padding-left: 11px;
+}
+
+.admin button.active {
+    border-left: 4px solid #079ac7;
+    padding-left: 11px;
+}
 
 .menudireito{
     width: calc(100% - 20vw);
@@ -128,10 +151,15 @@ onMounted(async () => {
     overflow: hidden;
     min-width: 0;
     flex: 1;
+    border-radius: 0 12px 12px 0;
 }
 
 .admin button{
-    color: #00b7ff;
+    color: #079ac7;
+}
+
+.admin button:hover {
+    color: #ffffff !important;
 }
 
 /* Responsividade para telas grandes (TVs e monitores) */
@@ -150,16 +178,20 @@ onMounted(async () => {
     }
     
     .menuesquerdo h2 {
-        font-size: clamp(1.5rem, 2.5vw, 2.2rem);
+        font-size: clamp(1.3rem, 2vw, 1.8rem);
+        padding: 30px 20px 25px 20px;
     }
     
     .menuesquerdo h3 {
-        font-size: clamp(1.6rem, 2.8vw, 2.5rem);
+        font-size: clamp(1.4rem, 2.2vw, 1.9rem);
+        margin: 25px 20px 20px 20px;
+        padding: 15px 20px;
     }
     
     .menuesquerdo button {
-        height: clamp(70px, 7vh, 100px);
-        font-size: clamp(1.1rem, 1.8vw, 1.6rem);
+        height: clamp(60px, 6vh, 90px);
+        font-size: clamp(1rem, 1.6vw, 1.4rem);
+        padding: 0 20px;
     }
 }
 
@@ -178,16 +210,20 @@ onMounted(async () => {
     }
     
     .menuesquerdo h2 {
-        font-size: clamp(1.8rem, 3vw, 2.8rem);
+        font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+        padding: 35px 25px 30px 25px;
     }
     
     .menuesquerdo h3 {
-        font-size: clamp(2rem, 3.5vw, 3.2rem);
+        font-size: clamp(1.7rem, 2.8vw, 2.4rem);
+        margin: 30px 25px 25px 25px;
+        padding: 18px 25px;
     }
     
     .menuesquerdo button {
-        height: clamp(80px, 8vh, 120px);
-        font-size: clamp(1.3rem, 2.2vw, 2rem);
+        height: clamp(70px, 7vh, 100px);
+        font-size: clamp(1.2rem, 1.9vw, 1.7rem);
+        padding: 0 25px;
     }
 }
 
@@ -196,7 +232,7 @@ onMounted(async () => {
     .Tudo {
         flex-direction: row;
         height: 100vh;
-        padding: 10px;
+        padding: 15px 0;
     }
     
     .menuesquerdo {
@@ -204,10 +240,27 @@ onMounted(async () => {
         max-width: 200px;
         min-width: 180px;
         height: 100%;
-        border-radius: 12px 0 0 12px;
         margin-bottom: 0;
-        padding: 15px;
+        padding: 0;
         box-sizing: border-box;
+        border-radius: 0 10px 10px 0;
+    }
+    
+    .menuesquerdo button {
+        padding: 0 12px;
+        font-size: clamp(0.75rem, 1.1vw, 0.95rem);
+        height: clamp(40px, 4.5vh, 60px);
+    }
+    
+    .menuesquerdo h2 {
+        padding: 18px 12px 12px 12px;
+        font-size: clamp(0.9rem, 1.6vw, 1.3rem);
+    }
+    
+    .menuesquerdo h3 {
+        margin: 12px 12px 8px 12px;
+        padding: 8px 12px;
+        font-size: clamp(1rem, 1.7vw, 1.4rem);
     }
     
     .menudireito {
@@ -227,15 +280,33 @@ onMounted(async () => {
 
 @media (max-width: 480px) {
     .Tudo {
-        padding: 5px;
+        padding: 10px 0;
     }
     
     .menuesquerdo {
         width: 30vw;
         max-width: 150px;
         min-width: 140px;
-        padding: 10px;
+        padding: 0;
         box-sizing: border-box;
+        border-radius: 0 8px 8px 0;
+    }
+    
+    .menuesquerdo button {
+        padding: 0 8px;
+        font-size: clamp(0.65rem, 0.9vw, 0.85rem);
+        height: clamp(35px, 3.5vh, 45px);
+    }
+    
+    .menuesquerdo h2 {
+        padding: 12px 8px 8px 8px;
+        font-size: clamp(0.8rem, 1.3vw, 1.1rem);
+    }
+    
+    .menuesquerdo h3 {
+        margin: 8px 8px 6px 8px;
+        padding: 6px 8px;
+        font-size: clamp(0.9rem, 1.4vw, 1.2rem);
     }
     
     .menudireito {
@@ -248,6 +319,42 @@ onMounted(async () => {
     .menuesquerdo button {
         height: clamp(40px, 4vh, 50px);
         font-size: clamp(0.7rem, 1vw, 0.9rem);
+    }
+}
+
+@media (max-width: 320px) {
+    .Tudo {
+        padding: 8px 0;
+    }
+    
+    .menuesquerdo {
+        width: 35vw;
+        max-width: 120px;
+        min-width: 110px;
+        border-radius: 0 6px 6px 0;
+    }
+    
+    .menudireito {
+        width: calc(100% - 35vw);
+        max-width: calc(100% - 120px);
+        min-width: calc(100% - 110px);
+    }
+    
+    .menuesquerdo button {
+        padding: 0 6px;
+        font-size: clamp(0.6rem, 0.8vw, 0.8rem);
+        height: clamp(30px, 3vh, 40px);
+    }
+    
+    .menuesquerdo h2 {
+        padding: 10px 6px 6px 6px;
+        font-size: clamp(0.7rem, 1.1vw, 1rem);
+    }
+    
+    .menuesquerdo h3 {
+        margin: 6px 6px 4px 6px;
+        padding: 4px 6px;
+        font-size: clamp(0.8rem, 1.2vw, 1.1rem);
     }
 }
 

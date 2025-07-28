@@ -1,12 +1,5 @@
 <template>
-    <!-- Nova barrinha no topo -->
-    <div class="top-bar">
-        <div class="top-bar-links">
-            <router-link to="/" class="top-link">Home</router-link>
-            <router-link to="/dados" class="top-link">Painel</router-link>
-            <router-link to="/pedidos" class="top-link">Meus Pedidos</router-link>
-        </div>
-    </div>
+    <TopBar />
     
     <header>
         <a class="logo desktop" href="/">
@@ -239,6 +232,7 @@ import { useToast } from 'vue-toastification'
 import DISPONIVELREAL from './img/DISPONIVELREAL.png'
 import INDISPONIVELREAL from './img/INDISPONIVELREAL.png'
 import { getCategoriasPorUsuario228 } from '../services/api'
+import TopBar from './TopBar.vue'
 
 const apiBase = 'http://35.196.79.227:8000'
 const toast = useToast()
@@ -528,38 +522,7 @@ function finalizarCompra() {
 
 <style scoped>
 
-.top-bar {
-    background: #ffffff;
-    padding: 8px 0;
-    border-bottom: 1px solid #02060af5;
-}
 
-.top-bar-links {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 40px;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.top-link {
-    color: #02060af5;
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 500;
-    transition: color 0.2s ease;
-    font-family: helvetica;
-}
-
-.top-link:hover {
-    color: #079ac7;
-}
-
-.top-link.router-link-active {
-    color: #079ac7;
-    font-weight: 600;
-}
 
 header {
     display: flex;
@@ -1432,48 +1395,7 @@ button:hover img {
     }
 }
 
-@media (max-width: 550px) {
-    .top-bar-links {
-        gap: 20px;
-        padding: 0 15px;
-    }
-    
-    .top-link {
-        font-size: 12px;
-    }
-}
 
-@media (max-width: 768px) {
-    .top-bar-links {
-        gap: 25px;
-    }
-    
-    .top-link {
-        font-size: 13px;
-    }
-}
-
-@media (max-width: 480px) {
-    .top-bar-links {
-        gap: 15px;
-        padding: 0 10px;
-    }
-    
-    .top-link {
-        font-size: 12px;
-    }
-}
-
-@media (max-width: 320px) {
-    .top-bar-links {
-        gap: 10px;
-        padding: 0 5px;
-    }
-    
-    .top-link {
-        font-size: 11px;
-    }
-}
 
 /* Responsividade para TVs grandes (1200px+) */
 @media (min-width: 1200px) {

@@ -45,8 +45,8 @@
     <div class="produtos">
       <h3 class="titulo-principal">{{ modoDesconto ? 'Descontos' : 'Produtos' }}</h3>
       
-      <!-- Input de Busca Centralizado -->
-      <div class="busca-container">
+      <!-- Header com Busca e Botões -->
+      <div class="produtos-header">
         <div class="input-busca">
           <input 
             type="text" 
@@ -58,10 +58,20 @@
           />
           <img src="../components/img/LupaFinal.png" alt="Buscar" />
         </div>
+
+        <div class="botoes-acoes">
+          <button v-if="!modoDesconto" class="novo-produto-btn" @click="abrirCriacao">Novo produto</button>
+          <button v-if="modoDesconto" class="novo-produto-btn" :class="{ 'cancelar-btn': selecionandoProduto }" @click="selecionandoProduto ? cancelarSelecaoProduto() : abrirCriacaoDesconto()">
+            {{ selecionandoProduto ? 'Cancelar' : 'Novo desconto' }}
+          </button>
+          <button class="alternar-modo-btn" @click="alternarModo">
+            {{ modoDesconto ? 'Produtos' : 'Descontos' }}
+          </button>
+        </div>
       </div>
       
-      <!-- Header com Filtros -->
-      <div class="produtos-header">
+      <!-- Filtros Centralizados -->
+      <div class="filtros-container">
         <div class="filtro-categorias">
           <div class="filtro-estoque">
             <label for="filtroEstoque" style="margin-right: 6px; font-size: 1rem;">Estoque:</label>
@@ -92,16 +102,6 @@
               <option value="Sem desconto">Sem desconto</option>
             </select>
           </div>
-        </div>
-
-        <div class="botoes-acoes">
-          <button v-if="!modoDesconto" class="novo-produto-btn" @click="abrirCriacao">Novo produto</button>
-          <button v-if="modoDesconto" class="novo-produto-btn" :class="{ 'cancelar-btn': selecionandoProduto }" @click="selecionandoProduto ? cancelarSelecaoProduto() : abrirCriacaoDesconto()">
-            {{ selecionandoProduto ? 'Cancelar' : 'Novo desconto' }}
-          </button>
-          <button class="alternar-modo-btn" @click="alternarModo">
-            {{ modoDesconto ? 'Produtos' : 'Descontos' }}
-          </button>
         </div>
       </div>
 
@@ -957,8 +957,7 @@ onMounted(async () => {
   background-color: #ffffff;
   border-radius: 15px;
   padding: 0 20px;
-  width: 80%;
-  max-width: 400px;
+  width: 300px;
   height: 40px;
   border: 1px solid #6d6d6d;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
@@ -998,7 +997,7 @@ onMounted(async () => {
 .filtro-categorias {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 }
 
 .filtro-estoque,
@@ -1006,15 +1005,15 @@ onMounted(async () => {
 .filtro-desconto {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 3px;
 }
 
 .filtro-categorias select,
 .filtro-desconto select {
-  padding: 6px 8px;
+  padding: 4px 6px;
   border-radius: 5px;
   border: 1px solid #bdbdbd;
-  font-size: 1rem;
+  font-size: 0.9rem;
   width: auto;
   min-width: fit-content;
 }
@@ -1034,6 +1033,25 @@ onMounted(async () => {
   align-items: center;
   gap: 10px;
   margin-left: auto;
+}
+
+/* ===== NOVO LAYOUT ===== */
+.produtos-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgb(167, 167, 167);
+  padding-bottom: 20px;
+  gap: 20px;
+}
+
+.filtros-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgb(167, 167, 167);
+  padding-bottom: 20px;
 }
 
 /* ===== BOTÕES ===== */
@@ -1218,7 +1236,7 @@ li {
 }
 
 .produto-com-desconto-modo {
-  border: 2px solid #90EE90 !important;
+  border: 2px solid #228B22 !important;
   background-color: #f8f9fa !important;
   opacity: 0.9;
 }
@@ -1262,8 +1280,8 @@ li {
 }
 
 .desconto-barra.ativo {
-  background-color: #90EE90;
-  color: black;
+  background-color: #228B22;
+  color: white;
 }
 
 .desconto-barra.expirado {
@@ -1550,9 +1568,19 @@ li {
     margin-left: 5px;
   }
   
+  .produtos-header {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
   .input-busca {
-    max-width: 100%;
+    width: 100%;
+    max-width: 300px;
     height: 45px;
+  }
+  
+  .filtros-container {
+    width: 100%;
   }
   
   .input-busca input {
@@ -1577,8 +1605,8 @@ li {
   }
   
   .filtro-categorias select {
-    padding: 4px 8px;
-    font-size: 0.9rem;
+    padding: 3px 6px;
+    font-size: 0.85rem;
   }
   
   .linha-dupla {
@@ -1699,8 +1727,18 @@ li {
     margin-left: 3px;
   }
   
+  .produtos-header {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
   .input-busca {
+    width: 100%;
     height: 40px;
+  }
+  
+  .filtros-container {
+    width: 100%;
   }
   
   .input-busca input {
@@ -1721,8 +1759,8 @@ li {
   }
   
   .filtro-categorias select {
-    padding: 3px 6px;
-    font-size: 0.8rem;
+    padding: 2px 4px;
+    font-size: 0.75rem;
   }
   
   .linha-dupla {
