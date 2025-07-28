@@ -45,18 +45,54 @@
     <div class="produtos">
       <h3 class="titulo-principal">{{ modoDesconto ? 'Descontos' : 'Produtos' }}</h3>
       
-      <!-- Header com Busca e Botões -->
+      <!-- Header com Busca, Botões e Filtros -->
       <div class="produtos-header">
-        <div class="input-busca">
-          <input 
-            type="text" 
-            placeholder="Buscar produtos..." 
-            v-model="termoBusca" 
-            @input="onInputBusca" 
-            @focus="onFocusBusca" 
-            @blur="onBlurBusca"
-          />
-          <img src="../components/img/LupaFinal.png" alt="Buscar" />
+        <div class="header-left">
+          <div class="input-busca">
+            <input 
+              type="text" 
+              placeholder="Buscar produtos..." 
+              v-model="termoBusca" 
+              @input="onInputBusca" 
+              @focus="onFocusBusca" 
+              @blur="onBlurBusca"
+            />
+            <img src="../components/img/LupaFinal.png" alt="Buscar" />
+          </div>
+        </div>
+
+        <div class="header-center">
+          <div class="filtro-categorias">
+            <div class="filtro-estoque">
+              <label for="filtroEstoque" style="margin-right: 6px; font-size: 1rem;">Estoque:</label>
+              <select id="filtroEstoque" v-model="estoqueSelecionado">
+                <option value="">Indefinido</option>
+                <option value="0">0</option>
+                <option value="10-30">10-30</option>
+                <option value="30-50">30-50</option>
+                <option value="50-100">50-100</option>
+                <option value="100+">100 ou mais</option>
+              </select>
+            </div>
+              
+            <div class="filtro-categoria">
+              <label for="filtroCategoria" style="margin-right: 6px; font-size: 1rem;">Categoria:</label>
+              <select id="filtroCategoria" v-model="categoriaSelecionada">
+                <option value="">Todas</option>
+                <option v-for="cat in categorias" :key="cat.id" :value="cat.id">{{ cat.name }}</option>
+              </select>
+            </div>
+              
+            <div v-if="modoDesconto" class="filtro-desconto">
+              <label for="filtroDesconto" style="margin-right: 6px; font-size: 1rem;">Desconto:</label>
+              <select id="filtroDesconto" v-model="filtroDescontoSelecionado">
+                <option value="Todos">Todos</option>
+                <option value="Ativo">Ativo</option>
+                <option value="Expirado">Expirado</option>
+                <option value="Sem desconto">Sem desconto</option>
+              </select>
+            </div>
+          </div>
         </div>
 
         <div class="botoes-acoes">
@@ -67,41 +103,6 @@
           <button class="alternar-modo-btn" @click="alternarModo">
             {{ modoDesconto ? 'Produtos' : 'Descontos' }}
           </button>
-        </div>
-      </div>
-      
-      <!-- Filtros Centralizados -->
-      <div class="filtros-container">
-        <div class="filtro-categorias">
-          <div class="filtro-estoque">
-            <label for="filtroEstoque" style="margin-right: 6px; font-size: 1rem;">Estoque:</label>
-            <select id="filtroEstoque" v-model="estoqueSelecionado">
-              <option value="">Indefinido</option>
-              <option value="0">0</option>
-              <option value="10-30">10-30</option>
-              <option value="30-50">30-50</option>
-              <option value="50-100">50-100</option>
-              <option value="100+">100 ou mais</option>
-            </select>
-          </div>
-            
-          <div class="filtro-categoria">
-            <label for="filtroCategoria" style="margin-right: 6px; font-size: 1rem;">Categoria:</label>
-            <select id="filtroCategoria" v-model="categoriaSelecionada">
-              <option value="">Todas</option>
-              <option v-for="cat in categorias" :key="cat.id" :value="cat.id">{{ cat.name }}</option>
-            </select>
-          </div>
-            
-          <div v-if="modoDesconto" class="filtro-desconto">
-            <label for="filtroDesconto" style="margin-right: 6px; font-size: 1rem;">Desconto:</label>
-            <select id="filtroDesconto" v-model="filtroDescontoSelecionado">
-              <option value="Todos">Todos</option>
-              <option value="Ativo">Ativo</option>
-              <option value="Expirado">Expirado</option>
-              <option value="Sem desconto">Sem desconto</option>
-            </select>
-          </div>
         </div>
       </div>
 
@@ -390,6 +391,8 @@ function getStatusClass(desconto) {
   return 'status-futuro'
 }
 
+
+
 // Computed para filtros
 const produtosFiltrados = computed(() => {
   let filtrados = produtos.value
@@ -504,29 +507,26 @@ async function carregarProdutos() {
   carregandoProdutos.value = true
   erroProdutos.value = ''
   try {
-    const { data } = await api.get('/products/user/228')
+    // Carregar produtos e descontos em paralelo
+    const [produtosResponse, descontosResponse] = await Promise.all([
+      api.get('/products/user/228'),
+      api.get('/discounts/')
+    ])
     
-    const produtosComDescontos = await Promise.all(data.map(async (produto) => {
-      try {
-        const { data: descontos } = await api.get(`/discounts/`)
-        const descontosDoProduto = descontos.filter(desconto => desconto.product_id === produto.id)
-        return {
-          ...produto,
-          image_path: produto.image_path 
-            ? `http://35.196.79.227:8000${produto.image_path}` 
-            : '/placeholder-image.jpg',
-          discounts: descontosDoProduto || []
-        }
-  } catch (e) {
-        return {
-          ...produto,
-          image_path: produto.image_path 
-            ? `http://35.196.79.227:8000${produto.image_path}` 
-            : '/placeholder-image.jpg',
-          discounts: []
-        }
+    const produtosData = produtosResponse.data
+    const descontosData = descontosResponse.data
+    
+    // Mapear produtos com descontos de forma otimizada
+    const produtosComDescontos = produtosData.map(produto => {
+      const descontosDoProduto = descontosData.filter(desconto => desconto.product_id === produto.id)
+      return {
+        ...produto,
+        image_path: produto.image_path 
+          ? `http://35.196.79.227:8000${produto.image_path}` 
+          : '/placeholder-image.jpg',
+        discounts: descontosDoProduto || []
       }
-    }))
+    })
     
     produtos.value = produtosComDescontos
   } catch (e) {
@@ -926,6 +926,23 @@ onMounted(async () => {
   gap: 20px;
 }
 
+.header-left {
+  flex: 0 0 auto;
+}
+
+.header-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.botoes-acoes {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .produtos-header h3 {
   font-size: 2.5rem;
   font-family: helvetica;
@@ -1028,31 +1045,9 @@ onMounted(async () => {
   box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.2);
 }
 
-.botoes-acoes {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-left: auto;
-}
 
-/* ===== NOVO LAYOUT ===== */
-.produtos-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 20px;
-  border-bottom: 1px solid rgb(167, 167, 167);
-  padding-bottom: 20px;
-  gap: 20px;
-}
 
-.filtros-container {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
-  border-bottom: 1px solid rgb(167, 167, 167);
-  padding-bottom: 20px;
-}
+
 
 /* ===== BOTÕES ===== */
 .novo-produto-btn,
@@ -1506,6 +1501,8 @@ li {
   font-weight: bold;
 }
 
+
+
 /* ===== RESPONSIVIDADE ===== */
 @media (max-width: 768px) {
   .tudo {
@@ -1521,6 +1518,20 @@ li {
     flex-direction: column;
     gap: 15px;
     align-items: stretch;
+  }
+  
+  .header-left {
+    order: 1;
+  }
+  
+  .header-center {
+    order: 3;
+    margin-top: 15px;
+  }
+  
+  .botoes-acoes {
+    order: 2;
+    justify-content: center;
   }
   
   .produtos-header h3 {
@@ -1669,6 +1680,34 @@ li {
   .modal-desconto {
     padding: 20px;
     margin: 10px;
+  }
+}
+
+/* ===== TELAS GRANDES ===== */
+@media (min-width: 1200px) {
+  .produtos-header {
+    flex-direction: row;
+    align-items: center;
+    gap: 30px;
+  }
+  
+  .header-left {
+    flex: 0 0 300px;
+  }
+  
+  .header-center {
+    flex: 1;
+    justify-content: center;
+  }
+  
+  .botoes-acoes {
+    flex: 0 0 auto;
+  }
+  
+  .filtro-categorias {
+    display: flex;
+    gap: 20px;
+    align-items: center;
   }
 }
 

@@ -53,7 +53,7 @@
         <img src="../components/img/caminhaopenege-Photoroom.png" alt="">
         <div class="texto">
         <strong>FRETE GRÁTIS</strong><br />
-        ACIMA DE R$80
+        ACIMA DE R$15
         </div>
     </div>
 

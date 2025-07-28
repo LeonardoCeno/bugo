@@ -761,6 +761,7 @@ watch(totalPaginas, (novoTotal) => {
     position: relative;
     gap: 10px;
     width: 100%;
+    background-color: #ffffff;
     border: 1px solid rgba(173, 173, 173, 0.507);
 }
 

@@ -265,12 +265,10 @@ p {
 }
 
 .foto-usuario {
-    width: 35vw;
-    height: 35vw;
+    width: 300px;
+    height: 300px;
     min-width: 180px;
-    min-height: 180px;
     max-width: 350px;
-    max-height: 350px;
     border-radius: 50%;
     border: 3px solid #e1e5e9;
     margin: 18px 0 32px 0;

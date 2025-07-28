@@ -58,16 +58,16 @@ onMounted(async () => {
     display: flex;
     justify-content: center;
     width: 100%;
-    height: 100vh;
-    padding: 20px 0;
+    height: 95vh;
+    padding: 15px;
     box-sizing: border-box;
-    overflow-x: hidden;
+    overflow: hidden;
 }
 
 .menuesquerdo{
-    width: 20vw;
-    max-width: 400px;
-    min-width: 280px;
+    width: 18vw;
+    max-width: 350px;
+    min-width: 250px;
     height: 100%;
     background: #02060af5;
     z-index: 10;
@@ -75,7 +75,7 @@ onMounted(async () => {
     display: flex;
     flex-direction: column;
     padding: 0;
-    overflow-y: auto;
+    overflow: hidden;
     border-radius: 12px 0 0 12px;
     border-left: 1px solid #02060af5;
 }
@@ -83,8 +83,8 @@ onMounted(async () => {
 .menuesquerdo h2 {
     color: #ffffff;
     text-align: center;
-    padding: 25px 15px 20px 15px;
-    font-size: clamp(1.1rem, 1.8vw, 1.6rem);
+    padding: 20px 15px 15px 15px;
+    font-size: clamp(1rem, 1.6vw, 1.4rem);
     margin: 0;
     font-weight: 600;
     white-space: nowrap;
@@ -98,11 +98,11 @@ onMounted(async () => {
 
 .menuesquerdo h3{
     color: #079ac7;
-    font-size: clamp(1.1rem, 1.8vw, 1.6rem);
+    font-size: clamp(1rem, 1.6vw, 1.4rem);
     font-weight: 600;
     text-align: center;
-    margin: 20px 15px 15px 15px;
-    padding: 12px 15px;
+    margin: 15px 15px 10px 15px;
+    padding: 10px 15px;
     text-decoration: none;
     white-space: nowrap;
     overflow: hidden;
@@ -111,10 +111,10 @@ onMounted(async () => {
 
 .menuesquerdo button{
     width: 100%;
-    height: clamp(45px, 5vh, 70px);
+    height: clamp(40px, 4.5vh, 60px);
     color: #ffffff;
     font-weight: 500;
-    font-size: clamp(0.85rem, 1.4vw, 1.2rem);
+    font-size: clamp(0.8rem, 1.3vw, 1.1rem);
     background: transparent;
     border: none;
     margin: 0;
@@ -142,9 +142,9 @@ onMounted(async () => {
 }
 
 .menudireito{
-    width: calc(100% - 20vw);
-    max-width: calc(100% - 400px);
-    min-width: calc(100% - 280px);
+    width: calc(100% - 18vw);
+    max-width: calc(100% - 350px);
+    min-width: calc(100% - 250px);
     height: 100%;
     background-color: #ffffff;
     border: 1px solid black;
@@ -165,64 +165,64 @@ onMounted(async () => {
 /* Responsividade para telas grandes (TVs e monitores) */
 @media (min-width: 1920px) {
     .menuesquerdo {
-        width: 18vw;
-        max-width: 500px;
-        min-width: 350px;
+        width: 16vw;
+        max-width: 450px;
+        min-width: 300px;
     }
     
     .menudireito {
-        width: calc(100% - 18vw);
-        max-width: calc(100% - 500px);
-        min-width: calc(100% - 350px);
+        width: calc(100% - 16vw);
+        max-width: calc(100% - 450px);
+        min-width: calc(100% - 300px);
         overflow: hidden;
     }
     
     .menuesquerdo h2 {
-        font-size: clamp(1.3rem, 2vw, 1.8rem);
-        padding: 30px 20px 25px 20px;
+        font-size: clamp(1.2rem, 1.8vw, 1.6rem);
+        padding: 25px 20px 20px 20px;
     }
     
     .menuesquerdo h3 {
-        font-size: clamp(1.4rem, 2.2vw, 1.9rem);
-        margin: 25px 20px 20px 20px;
-        padding: 15px 20px;
+        font-size: clamp(1.3rem, 2vw, 1.7rem);
+        margin: 20px 20px 15px 20px;
+        padding: 12px 20px;
     }
     
     .menuesquerdo button {
-        height: clamp(60px, 6vh, 90px);
-        font-size: clamp(1rem, 1.6vw, 1.4rem);
+        height: clamp(50px, 5.5vh, 80px);
+        font-size: clamp(0.9rem, 1.5vw, 1.3rem);
         padding: 0 20px;
     }
 }
 
 @media (min-width: 2560px) {
     .menuesquerdo {
-        width: 16vw;
-        max-width: 600px;
-        min-width: 400px;
+        width: 14vw;
+        max-width: 550px;
+        min-width: 350px;
     }
     
     .menudireito {
-        width: calc(100% - 16vw);
-        max-width: calc(100% - 600px);
-        min-width: calc(100% - 400px);
+        width: calc(100% - 14vw);
+        max-width: calc(100% - 550px);
+        min-width: calc(100% - 350px);
         overflow: hidden;
     }
     
     .menuesquerdo h2 {
-        font-size: clamp(1.6rem, 2.5vw, 2.2rem);
-        padding: 35px 25px 30px 25px;
+        font-size: clamp(1.4rem, 2.2vw, 2rem);
+        padding: 30px 25px 25px 25px;
     }
     
     .menuesquerdo h3 {
-        font-size: clamp(1.7rem, 2.8vw, 2.4rem);
-        margin: 30px 25px 25px 25px;
-        padding: 18px 25px;
+        font-size: clamp(1.5rem, 2.5vw, 2.2rem);
+        margin: 25px 25px 20px 25px;
+        padding: 15px 25px;
     }
     
     .menuesquerdo button {
-        height: clamp(70px, 7vh, 100px);
-        font-size: clamp(1.2rem, 1.9vw, 1.7rem);
+        height: clamp(60px, 6.5vh, 90px);
+        font-size: clamp(1.1rem, 1.8vw, 1.6rem);
         padding: 0 25px;
     }
 }
@@ -231,14 +231,14 @@ onMounted(async () => {
 @media (max-width: 768px) {
     .Tudo {
         flex-direction: row;
-        height: 100vh;
-        padding: 15px 0;
+        height: 95vh;
+        padding: 12px;
     }
     
     .menuesquerdo {
-        width: 25vw;
-        max-width: 200px;
-        min-width: 180px;
+        width: 22vw;
+        max-width: 180px;
+        min-width: 160px;
         height: 100%;
         margin-bottom: 0;
         padding: 0;
@@ -264,9 +264,9 @@ onMounted(async () => {
     }
     
     .menudireito {
-        width: calc(100% - 25vw);
-        max-width: calc(100% - 200px);
-        min-width: calc(100% - 180px);
+        width: calc(100% - 22vw);
+        max-width: calc(100% - 180px);
+        min-width: calc(100% - 160px);
         height: 100%;
         min-height: auto;
         overflow: hidden;
@@ -280,13 +280,14 @@ onMounted(async () => {
 
 @media (max-width: 480px) {
     .Tudo {
-        padding: 10px 0;
+        height: 95vh;
+        padding: 8px;
     }
     
     .menuesquerdo {
-        width: 30vw;
-        max-width: 150px;
-        min-width: 140px;
+        width: 28vw;
+        max-width: 130px;
+        min-width: 120px;
         padding: 0;
         box-sizing: border-box;
         border-radius: 0 8px 8px 0;
@@ -310,9 +311,9 @@ onMounted(async () => {
     }
     
     .menudireito {
-        width: calc(100% - 30vw);
-        max-width: calc(100% - 150px);
-        min-width: calc(100% - 140px);
+        width: calc(100% - 28vw);
+        max-width: calc(100% - 130px);
+        min-width: calc(100% - 120px);
         overflow: hidden;
     }
     
@@ -324,20 +325,21 @@ onMounted(async () => {
 
 @media (max-width: 320px) {
     .Tudo {
-        padding: 8px 0;
+        height: 95vh;
+        padding: 6px;
     }
     
     .menuesquerdo {
-        width: 35vw;
-        max-width: 120px;
-        min-width: 110px;
+        width: 32vw;
+        max-width: 100px;
+        min-width: 90px;
         border-radius: 0 6px 6px 0;
     }
     
     .menudireito {
-        width: calc(100% - 35vw);
-        max-width: calc(100% - 120px);
-        min-width: calc(100% - 110px);
+        width: calc(100% - 32vw);
+        max-width: calc(100% - 100px);
+        min-width: calc(100% - 90px);
     }
     
     .menuesquerdo button {
