@@ -93,12 +93,6 @@ export async function getItensCarrinho() {
 
 // adiciona um item ao carrinho do usuario
 export async function adicionarItemCarrinho(produtoId, quantidade, precoUnitario) {
-  console.log('API: Enviando para /cart/items:', {
-    product_id: produtoId,
-    quantity: quantidade,
-    unit_price: precoUnitario
-  })
-  
   // adiciona um item ao carrinho do usuario
   const response = await api.post('/cart/items', {
     product_id: produtoId,
@@ -107,7 +101,6 @@ export async function adicionarItemCarrinho(produtoId, quantidade, precoUnitario
   })
   
   // atualiza o carrinho do usuario
-  console.log('API: Resposta recebida:', response.data)
   return response.data
 }
 
