@@ -45,43 +45,44 @@
     <div class="produtos">
       <h3 class="titulo-principal">{{ modoDesconto ? 'Descontos' : 'Produtos' }}</h3>
       
+      <!-- Input de Busca Centralizado -->
+      <div class="busca-container">
+        <div class="input-busca">
+          <input 
+            type="text" 
+            placeholder="Buscar produtos..." 
+            v-model="termoBusca" 
+            @input="onInputBusca" 
+            @focus="onFocusBusca" 
+            @blur="onBlurBusca"
+          />
+          <img src="../components/img/LupaFinal.png" alt="Buscar" />
+        </div>
+      </div>
+      
       <!-- Header com Filtros -->
-    <div class="produtos-header">
-        <div class="busca-container">
-          <div class="input-busca">
-            <input 
-              type="text" 
-              placeholder="Buscar produtos..." 
-              v-model="termoBusca" 
-              @input="onInputBusca" 
-              @focus="onFocusBusca" 
-              @blur="onBlurBusca"
-            />
-            <img src="../components/img/LupaFinal.png" alt="Buscar" />
+      <div class="produtos-header">
+        <div class="filtro-categorias">
+          <div class="filtro-estoque">
+            <label for="filtroEstoque" style="margin-right: 6px; font-size: 1rem;">Estoque:</label>
+            <select id="filtroEstoque" v-model="estoqueSelecionado">
+              <option value="">Indefinido</option>
+              <option value="0">0</option>
+              <option value="10-30">10-30</option>
+              <option value="30-50">30-50</option>
+              <option value="50-100">50-100</option>
+              <option value="100+">100 ou mais</option>
+            </select>
           </div>
-        </div>
-        
-      <div class="filtro-categorias">
-        <div class="filtro-estoque">
-          <label for="filtroEstoque" style="margin-right: 6px; font-size: 1rem;">Estoque:</label>
-          <select id="filtroEstoque" v-model="estoqueSelecionado">
-            <option value="">Indefinido</option>
-            <option value="0">0</option>
-            <option value="10-30">10-30</option>
-            <option value="30-50">30-50</option>
-            <option value="50-100">50-100</option>
-            <option value="100+">100 ou mais</option>
-          </select>
-        </div>
-          
-        <div class="filtro-categoria">
+            
+          <div class="filtro-categoria">
             <label for="filtroCategoria" style="margin-right: 6px; font-size: 1rem;">Categoria:</label>
-          <select id="filtroCategoria" v-model="categoriaSelecionada">
-            <option value="">Todas</option>
-            <option v-for="cat in categorias" :key="cat.id" :value="cat.id">{{ cat.name }}</option>
-          </select>
-        </div>
-          
+            <select id="filtroCategoria" v-model="categoriaSelecionada">
+              <option value="">Todas</option>
+              <option v-for="cat in categorias" :key="cat.id" :value="cat.id">{{ cat.name }}</option>
+            </select>
+          </div>
+            
           <div v-if="modoDesconto" class="filtro-desconto">
             <label for="filtroDesconto" style="margin-right: 6px; font-size: 1rem;">Desconto:</label>
             <select id="filtroDesconto" v-model="filtroDescontoSelecionado">
@@ -90,8 +91,10 @@
               <option value="Expirado">Expirado</option>
               <option value="Sem desconto">Sem desconto</option>
             </select>
-      </div>
+          </div>
+        </div>
 
+        <div class="botoes-acoes">
           <button v-if="!modoDesconto" class="novo-produto-btn" @click="abrirCriacao">Novo produto</button>
           <button v-if="modoDesconto" class="novo-produto-btn" :class="{ 'cancelar-btn': selecionandoProduto }" @click="selecionandoProduto ? cancelarSelecaoProduto() : abrirCriacaoDesconto()">
             {{ selecionandoProduto ? 'Cancelar' : 'Novo desconto' }}
@@ -99,7 +102,7 @@
           <button class="alternar-modo-btn" @click="alternarModo">
             {{ modoDesconto ? 'Produtos' : 'Descontos' }}
           </button>
-    </div>
+        </div>
       </div>
 
       <!-- Lista de Produtos -->
@@ -920,6 +923,7 @@ onMounted(async () => {
   margin-bottom: 25px;
   border-bottom: 1px solid rgb(167, 167, 167);
   padding-bottom: 20px;
+  gap: 20px;
 }
 
 .produtos-header h3 {
@@ -943,6 +947,7 @@ onMounted(async () => {
   display: flex;
   justify-content: center;
   width: 100%;
+  margin-bottom: 20px;
 }
 
 .input-busca {
@@ -993,7 +998,7 @@ onMounted(async () => {
 .filtro-categorias {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
 }
 
 .filtro-estoque,
@@ -1001,25 +1006,34 @@ onMounted(async () => {
 .filtro-desconto {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
 }
 
 .filtro-categorias select,
 .filtro-desconto select {
-  padding: 6px 10px;
+  padding: 6px 8px;
   border-radius: 5px;
   border: 1px solid #bdbdbd;
   font-size: 1rem;
+  width: auto;
+  min-width: fit-content;
 }
 
 .filtro-desconto select {
-  min-width: 150px;
+  min-width: fit-content;
 }
 
 .filtro-desconto select:focus {
   outline: none;
   border-color: #2196F3;
   box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.2);
+}
+
+.botoes-acoes {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
 }
 
 /* ===== BOTÕES ===== */

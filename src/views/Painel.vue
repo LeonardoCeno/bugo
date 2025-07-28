@@ -125,7 +125,7 @@ onMounted(async () => {
     height: 100%;
     background-color: #ffffff;
     border: 1px solid black;
-    overflow-x: hidden;
+    overflow: hidden;
     min-width: 0;
     flex: 1;
 }
@@ -146,6 +146,7 @@ onMounted(async () => {
         width: calc(100% - 18vw);
         max-width: calc(100% - 500px);
         min-width: calc(100% - 350px);
+        overflow: hidden;
     }
     
     .menuesquerdo h2 {
@@ -173,6 +174,7 @@ onMounted(async () => {
         width: calc(100% - 16vw);
         max-width: calc(100% - 600px);
         min-width: calc(100% - 400px);
+        overflow: hidden;
     }
     
     .menuesquerdo h2 {
@@ -214,6 +216,7 @@ onMounted(async () => {
         min-width: calc(100% - 180px);
         height: 100%;
         min-height: auto;
+        overflow: hidden;
     }
     
     .menuesquerdo button {
@@ -239,6 +242,7 @@ onMounted(async () => {
         width: calc(100% - 30vw);
         max-width: calc(100% - 150px);
         min-width: calc(100% - 140px);
+        overflow: hidden;
     }
     
     .menuesquerdo button {

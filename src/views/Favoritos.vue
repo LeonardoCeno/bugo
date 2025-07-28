@@ -272,25 +272,27 @@ function confirmarRemocao() {
     width: 100%;
     height: 100%;
     background-color: #ffffff;
+    padding: 20px;
 }
 
 .titulo {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 20px;
     background-color: #e11d48;
-    min-height: 4.5rem;
     height: 4.5rem;
     width: 100%;
     max-width: 1250px;
     margin-bottom: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
 }
 
 .titulo h3 {
     font-size: 26px;
     color: rgb(255, 255, 255);
+    margin: 0;
+    font-weight: bold;
 }
 
 /* Estilos para o botão remover todos */
@@ -593,16 +595,15 @@ function confirmarRemocao() {
     }
 }
 
-@media (max-width: 700px) {
+@media (max-width: 768px) {
     .lista {
         grid-template-columns: repeat(2, 1fr);
     }
     .titulo, .soumdetalhe, .produtos {
         max-width: 98vw;
     }
-    .titulo {
-        min-height: 4rem;
-        height: 4rem;
+    .titulo h3 {
+        font-size: 20px;
     }
 }
 
@@ -620,11 +621,10 @@ function confirmarRemocao() {
         max-width: 100vw;
     }
     .titulo {
-        min-height: 3.5rem;
         height: 3.5rem;
     }
     .titulo h3 {
-        font-size: 20px;
+        font-size: 16px;
     }
     .btn-remover-todos {
         font-size: 12px;
